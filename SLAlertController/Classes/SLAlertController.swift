@@ -340,6 +340,23 @@ public class SLAlertController: UIViewController {
         }
     }
     
+    public func addCancelAction(action:()->Void) {
+        self.cancelAction = action
+    }
+    
+    public func addOtherAction(action: ()->Void) {
+        self.otherAction = action
+    }
+    
+    public func setTitleFont(font: UIFont) {
+        self.tilteLabel.font = font
+    }
+    
+    public func setTextFont(font: UIFont) {
+        if self.textView != nil {
+            self.textView.font = font
+        }
+    }
 
     /*
     // MARK: - Navigation
