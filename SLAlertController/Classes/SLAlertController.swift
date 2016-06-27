@@ -209,6 +209,7 @@ public class SLAlertController: UIViewController {
     }
     
     public func show(viewController:UIViewController, animated:Bool, completion:(() -> Void)?) {
+        assert(NSThread.isMainThread(), "SLAlertController needs to be accessed on the main thread.")
         self.rootViewController = viewController
         
         self.view.alpha = 0
@@ -235,6 +236,26 @@ public class SLAlertController: UIViewController {
             break
             
         case .Top:
+            self.rootViewController.presentViewController(self, animated: false, completion: { 
+                
+                UIView.animateWithDuration(0.2, animations: { 
+                    self.view.alpha = 1.0
+                })
+                
+                self.alertView.center.x = self.view.center.x
+                self.alertView.center.y = -500
+                
+                UIView.animateWithDuration(0.5, delay: 0.05, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.5, options: [], animations: {
+                    self.alertView.center = self.view.center
+                    }, completion: { finished in
+                        if let d = self.delay {
+                            let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(d * Double(NSEC_PER_SEC)))
+                            dispatch_after(delayTime, dispatch_get_main_queue()) {
+                                self.hide(true)
+                            }
+                        }
+                })
+            })
             break
             
         case .None:
@@ -257,6 +278,7 @@ public class SLAlertController: UIViewController {
     
     
     public func hide(animated:Bool) {
+        assert(NSThread.isMainThread(), "SLAlertController needs to be accessed on the main thread.")
         if animated {
             switch self.animationType! {
             case .Fade:
@@ -278,6 +300,24 @@ public class SLAlertController: UIViewController {
                 break
                 
             case .Top:
+                UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.5, options: [], animations: {
+                    self.alertView.center.y = self.view.center.y + self.view.frame.height
+                    }, completion: { finished in
+                        UIView.animateWithDuration(0.1, animations: {
+                            self.view.alpha = 0
+                            }, completion: { finished in
+                                self.dismissViewControllerAnimated(false, completion: {
+                                    
+                                    if self.cancelAction != nil {
+                                        self.cancelAction()
+                                    }
+                                    
+                                    if self.otherAction != nil {
+                                        self.otherAction()
+                                    }
+                                })
+                        })
+                })
                 break
                 
             case .None:
