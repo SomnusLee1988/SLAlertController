@@ -20,7 +20,7 @@ class ViewController: UIViewController {
     
     @IBAction func btnClicked(sender: AnyObject) {
         
-        let alert = SLAlertController(title: "Please do not connect the camera to your phone/tablet and operate on the app without a TF card inserted, otherwise it could cause system failure and you'll need to reset the camera", message: nil, image: UIImage (named: "Warning"), cancelButtonTitle: "OK", otherButtonTitle: nil, delay: nil, withAnimation: SLAlertAnimation.Fade)
+        let alert = SLAlertController(title: "I am title", message: "", image: UIImage (named: "Warning"), cancelButtonTitle: "OK", otherButtonTitle: nil, delay: nil, withAnimation: SLAlertAnimation.Fade)
         alert.alertTintColor = UIColor.RGB(255, 58, 47)
         alert.show(self, animated: true, completion: nil)
     }

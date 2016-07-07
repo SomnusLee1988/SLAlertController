@@ -100,13 +100,15 @@ public class SLAlertController: UIViewController {
         self.alertView = UIView()
         self.view.addSubview(alertView)
         
+        assert(!title.isEmpty, "alert title can not be empty!")
+        
         self.tilteLabel = UILabel()
         tilteLabel.numberOfLines = 0
         tilteLabel.textAlignment = .Center
         tilteLabel.text = title
         self.alertView.addSubview(tilteLabel)
         
-        if message != nil {
+        if message != nil && !(message?.isEmpty)! {
             self.textView = UITextView()
             self.textView.editable = false
             self.textView.text = message
