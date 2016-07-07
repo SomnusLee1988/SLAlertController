@@ -170,17 +170,17 @@ public class SLAlertController: UIViewController {
         
         y += padding
         
-        let titlestr = tilteLabel.text as! NSString
-        let titleRect = titlestr.boundingRectWithSize(CGSizeMake(contentWdith, CGFloat.max), options: .UsesLineFragmentOrigin, attributes: [NSFontAttributeName:tilteLabel.font], context: nil)
+        let titlestr = tilteLabel.text
+        let titleRect = titlestr!.boundingRectWithSize(CGSizeMake(contentWdith, CGFloat.max), options: .UsesLineFragmentOrigin, attributes: [NSFontAttributeName:tilteLabel.font], context: nil)
         self.tilteLabel.frame = CGRectMake(padding, y, contentWdith, ceil(titleRect.height))
         
         y += tilteLabel.frame.height
         y += padding
         
         if self.textView != nil {
-            let textstr = textView.text as! NSString
+            let textstr = textView.text
             let realsize = textView.sizeThatFits(CGSizeMake(contentWdith, CGFloat.max))
-            let textRect = textstr.boundingRectWithSize(CGSizeMake(contentWdith, realsize.height), options: .UsesLineFragmentOrigin, attributes: [NSFontAttributeName:textView.font!], context: nil)
+            let textRect = textstr!.boundingRectWithSize(CGSizeMake(contentWdith, realsize.height), options: .UsesLineFragmentOrigin, attributes: [NSFontAttributeName:textView.font!], context: nil)
             self.textView.frame = CGRectMake(padding, y, contentWdith, ceil(titleRect.height))
             y += tilteLabel.frame.height
             y += padding
@@ -235,7 +235,6 @@ public class SLAlertController: UIViewController {
                 })
                 
             })
-            break
             
         case .Top:
             self.rootViewController.presentViewController(self, animated: false, completion: { 
@@ -258,14 +257,9 @@ public class SLAlertController: UIViewController {
                         }
                 })
             })
-            break
             
         case .None:
             self.view.alpha = 1.0
-            break
-            
-        default:
-            break
             
         }
     }
@@ -333,9 +327,6 @@ public class SLAlertController: UIViewController {
                         self.otherAction()
                     }
                 })
-                break
-                
-            default:
                 break
                 
             }
