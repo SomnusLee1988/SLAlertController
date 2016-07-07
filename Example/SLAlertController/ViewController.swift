@@ -14,8 +14,15 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        let alert = SLAlertController()
-        alert.test()
+        
+        
+    }
+    
+    @IBAction func btnClicked(sender: AnyObject) {
+        
+        let alert = SLAlertController(title: "I am title", message: "", image: UIImage (named: "Warning"), cancelButtonTitle: "OK", otherButtonTitle: nil, delay: nil, withAnimation: SLAlertAnimation.Fade)
+        alert.alertTintColor = UIColor.RGB(255, 58, 47)
+        alert.show(self, animated: true, completion: nil)
     }
 
     override func didReceiveMemoryWarning() {
