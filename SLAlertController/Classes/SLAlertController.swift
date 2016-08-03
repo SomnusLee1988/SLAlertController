@@ -32,6 +32,10 @@ public class SLAlertController: UIViewController {
     var cancelAction:(()->Void)!
     var otherAction:(()->Void)!
     
+    enum ActionType {
+        case Cancel, Other
+    }
+    
     var delay:Double?
     var animationType:SLAlertAnimation?
     
@@ -265,15 +269,15 @@ public class SLAlertController: UIViewController {
     }
     
     func cancelButtonClicked() {
-        self.hide(true)
+        self.hide(true, source: .Cancel)
     }
     
     func otherButtonClicked() {
-        self.hide(true)
+        self.hide(true, source: .Other)
     }
     
     
-    public func hide(animated:Bool) {
+    func hide(animated:Bool, source: ActionType = .Cancel) {
         assert(NSThread.isMainThread(), "SLAlertController needs to be accessed on the main thread.")
         if animated {
             switch self.animationType! {
@@ -284,11 +288,11 @@ public class SLAlertController: UIViewController {
                     }, completion: { finished in
                         self.dismissViewControllerAnimated(false, completion: {
                             
-                            if self.cancelAction != nil {
+                            if let action = self.cancelAction where source == .Cancel{
                                 self.cancelAction()
                             }
                             
-                            if self.otherAction != nil {
+                            if let action = self.otherAction where source == .Other {
                                 self.otherAction()
                             }
                         })
