@@ -308,11 +308,11 @@ public class SLAlertController: UIViewController {
                             }, completion: { finished in
                                 self.dismissViewControllerAnimated(false, completion: {
                                     
-                                    if self.cancelAction != nil {
+                                    if let action = self.cancelAction where source == .Cancel {
                                         self.cancelAction()
                                     }
                                     
-                                    if self.otherAction != nil {
+                                    if let action = self.otherAction where source == .Other {
                                         self.otherAction()
                                     }
                                 })
@@ -323,11 +323,11 @@ public class SLAlertController: UIViewController {
             case .None:
                 self.view.alpha = 0.0
                 self.dismissViewControllerAnimated(false, completion: { 
-                    if self.cancelAction != nil {
+                    if let action = self.cancelAction where source == .Cancel {
                         self.cancelAction()
                     }
                     
-                    if self.otherAction != nil {
+                    if let action = self.otherAction where source == .Other {
                         self.otherAction()
                     }
                 })
